@@ -1,66 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# ✅ To-Do List API com Laravel
 
-## About Laravel
+API RESTful completa para gerenciamento de tarefas, com autenticação segura via Laravel Sanctum. Desenvolvida com foco em segurança, boas práticas e pronta para deploy.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Funcionalidades
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Cadastro e login de usuários
+- Autenticação via token (Bearer Token - Sanctum)
+- CRUD de tarefas (To-do)
+- Associação de tarefas ao usuário autenticado
+- Validação, tratamento de erros e segurança
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🔧 Tecnologias
 
-## Learning Laravel
+- Laravel 11+
+- Sanctum (autenticação API)
+- MySQL ou SQLite
+- PHP 8.1+
+- Postman/Insomnia para testes
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📦 Instalação local
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone https://github.com/RafaelVitorSantos/todo-api-laravel.git
+cd todo-api-laravel
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Configure o banco de dados no arquivo `.env`. Exemplo com MySQL:
 
-## Laravel Sponsors
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=todo_api
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Depois, execute:
 
-### Premium Partners
+```bash
+php artisan migrate
+php artisan serve
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## 🔐 Autenticação
 
-## Contributing
+- Utilize o endpoint `/api/register` para criar uma conta
+- Faça login em `/api/login` e copie o `token` de acesso
+- Use o token nos headers das requisições:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+Authorization: Bearer SEU_TOKEN
+```
 
-## Code of Conduct
+## 🧪 Testes com Postman / Insomnia
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 📌 Registro
 
-## Security Vulnerabilities
+**POST** `/api/register`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```json
+{
+  "name": "Rafael",
+  "email": "rafael@email.com",
+  "password": "senha123",
+  "password_confirmation": "senha123"
+}
+```
 
-## License
+### 🔐 Login
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**POST** `/api/login`
+
+```json
+{
+  "email": "rafael@email.com",
+  "password": "senha123"
+}
+```
+
+### 📋 Listar tarefas
+
+**GET** `/api/tasks`
+
+### ➕ Criar tarefa
+
+**POST** `/api/tasks`
+
+```json
+{
+  "title": "Estudar Laravel",
+  "description": "Implementar o CRUD"
+}
+```
+
+### ✏️ Atualizar tarefa
+
+**PUT** `/api/tasks/1`
+
+```json
+{
+  "title": "Estudar Laravel atualizado",
+  "completed": true
+}
+```
+
+### ❌ Deletar tarefa
+
+**DELETE** `/api/tasks/1`
+
+## ✅ Usando SQLite (opcional)
+
+Configure no `.env`:
+
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=./database/database.sqlite
+```
+
+Crie o arquivo do banco:
+
+```bash
+touch database/database.sqlite
+php artisan migrate
+```
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Livre para usar e contribuir.
+
+## 💼 Autor
+
+Feito por Rafael Santos (https://www.linkedin.com/in/rafaelvitorsantos/)
